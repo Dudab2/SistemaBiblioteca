@@ -6,6 +6,9 @@ import model.Usuario;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
+import java.sql.ResultSet;
+import java.util.ArrayList;
+import java.util.List;
 
 public class UsuarioDAO {
 
@@ -35,5 +38,44 @@ public class UsuarioDAO {
         } catch (SQLException e) {
             System.out.println("Erro ao cadastrar usuário: " + e.getMessage());
         }
+    }
+
+    public List<Usuario> listarUsuarios() {
+
+    List<Usuario> usuarios = new ArrayList<>();
+
+    String sql = "SELECT * FROM usuarios";
+
+    Connection conexao = Conexao.conectar();
+
+    if (conexao == null) {
+        return usuarios;
+    }
+
+    try {
+        PreparedStatement stmt = conexao.prepareStatement(sql);
+        ResultSet resultado = stmt.executeQuery();
+
+        while (resultado.next()) {
+
+            int id = resultado.getInt("id");
+            String nome = resultado.getString("nome");
+            String email = resultado.getString("email");
+
+            Usuario usuario = new Usuario(id, nome, email);
+
+            usuarios.add(usuario);
+        }
+
+        resultado.close();
+        stmt.close();
+        conexao.close();
+
+    } catch (SQLException e) {
+        System.out.println(
+            "Erro ao listar usuarios: " + e.getMessage()
+        );
+    }
+    return usuarios;
     }
 }

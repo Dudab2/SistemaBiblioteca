@@ -1,11 +1,14 @@
-    package util;
+package util;
 
 import java.util.Scanner;
+
+import dao.UsuarioDAO;
 import model.Livro;
 import model.Usuario;
 import service.Biblioteca;
 
 public class Menu {
+
     private Biblioteca biblioteca;
     private Scanner scanner;
 
@@ -36,30 +39,39 @@ public class Menu {
                 case 1:
                     cadastrarLivro();
                     break;
+
                 case 2:
                     cadastrarUsuario();
                     break;
+
                 case 3:
                     biblioteca.listarLivros();
                     break;
+
                 case 4:
                     biblioteca.listarUsuarios();
                     break;
+
                 case 5:
                     emprestarLivro();
                     break;
+
                 case 6:
                     devolverLivro();
                     break;
+
                 case 7:
                     biblioteca.listarEmprestimos();
                     break;
+
                 case 0:
                     System.out.println("Encerrando o sistema...");
                     break;
+
                 default:
                     System.out.println("Opcao invalida.");
             }
+
         } while (opcao != 0);
 
         scanner.close();
@@ -67,23 +79,21 @@ public class Menu {
 
     private void cadastrarLivro() {
 
-    System.out.print("Titulo: ");
-    String titulo = scanner.nextLine();
+        System.out.print("Titulo: ");
+        String titulo = scanner.nextLine();
 
-    System.out.print("Autor: ");
-    String autor = scanner.nextLine();
+        System.out.print("Autor: ");
+        String autor = scanner.nextLine();
 
-    System.out.print("ISBN: ");
-    String isbn = scanner.nextLine();
+        System.out.print("ISBN: ");
+        String isbn = scanner.nextLine();
 
-    Livro livro = new Livro(titulo, autor, isbn);
+        Livro livro = new Livro(titulo, autor, isbn);
 
-    biblioteca.cadastrarLivro(livro);
+        biblioteca.cadastrarLivro(livro);
     }
+
     private void cadastrarUsuario() {
-        System.out.print("ID do usuario: ");
-        int id = scanner.nextInt();
-        scanner.nextLine();
 
         System.out.print("Nome: ");
         String nome = scanner.nextLine();
@@ -91,23 +101,29 @@ public class Menu {
         System.out.print("Email: ");
         String email = scanner.nextLine();
 
-        Usuario usuario = new Usuario(id, nome, email);
+        Usuario usuario = new Usuario(nome, email);
+
+        UsuarioDAO usuarioDAO = new UsuarioDAO();
+        usuarioDAO.cadastrarUsuario(usuario);
+
         biblioteca.cadastrarUsuario(usuario);
     }
 
     private void emprestarLivro() {
-    System.out.print("Digite o ID do livro: ");
-    int idLivro = scanner.nextInt();
-    scanner.nextLine();
 
-    System.out.print("Digite o ID do usuario: ");
-    int idUsuario = scanner.nextInt();
-    scanner.nextLine();
+        System.out.print("Digite o ID do livro: ");
+        int idLivro = scanner.nextInt();
+        scanner.nextLine();
 
-    biblioteca.emprestarLivro(idLivro, idUsuario);
+        System.out.print("Digite o ID do usuario: ");
+        int idUsuario = scanner.nextInt();
+        scanner.nextLine();
+
+        biblioteca.emprestarLivro(idLivro, idUsuario);
     }
 
     private void devolverLivro() {
+
         System.out.print("Digite o ID do livro: ");
         int idLivro = scanner.nextInt();
         scanner.nextLine();
