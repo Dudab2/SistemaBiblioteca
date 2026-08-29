@@ -15,6 +15,13 @@ public class Livro {
         this.disponivel = true;
     }
 
+    public Livro(String titulo, String autor, String isbn) {
+    this.titulo = titulo;
+    this.autor = autor;
+    this.isbn = isbn;
+    this.disponivel = true;
+    }
+
     public int getId() {
         return id;
     }

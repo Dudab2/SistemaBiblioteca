@@ -66,23 +66,20 @@ public class Menu {
     }
 
     private void cadastrarLivro() {
-        System.out.print("ID do livro: ");
-        int id = scanner.nextInt();
-        scanner.nextLine();
 
-        System.out.print("Titulo: ");
-        String titulo = scanner.nextLine();
+    System.out.print("Titulo: ");
+    String titulo = scanner.nextLine();
 
-        System.out.print("Autor: ");
-        String autor = scanner.nextLine();
+    System.out.print("Autor: ");
+    String autor = scanner.nextLine();
 
-        System.out.print("ISBN: ");
-        String isbn = scanner.nextLine();
+    System.out.print("ISBN: ");
+    String isbn = scanner.nextLine();
 
-        Livro livro = new Livro(id, titulo, autor, isbn);
-        biblioteca.cadastrarLivro(livro);
+    Livro livro = new Livro(titulo, autor, isbn);
+
+    biblioteca.cadastrarLivro(livro);
     }
-
     private void cadastrarUsuario() {
         System.out.print("ID do usuario: ");
         int id = scanner.nextInt();

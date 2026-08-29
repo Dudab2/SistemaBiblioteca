@@ -5,23 +5,23 @@ import java.util.List;
 import model.Livro;
 import model.Usuario;
 import model.Emprestimo;
+import dao.livroDAO;
 
 public class Biblioteca {
     private List<Livro> livros;
     private List<Usuario> usuarios;
     private List<Emprestimo> emprestimos;
+    private livroDAO livroDAO;
 
     public Biblioteca() {
         this.livros = new ArrayList<>();
         this.usuarios = new ArrayList<>();
         this.emprestimos = new ArrayList<>();
+        this.livroDAO = new livroDAO();
     }
 
     public void cadastrarLivro(Livro livro) {
-    if (buscarLivroPorId(livro.getId()) != null) {
-        System.out.println("Ja existe um livro com esse ID.");
-        return;
-    }
+    livroDAO.cadastrar(livro);
     livros.add(livro);
     System.out.println("Livro cadastrado com sucesso!");
     }
@@ -87,20 +87,32 @@ public class Biblioteca {
     }
 
     public void devolverLivro(int idLivro) {
-        Livro livro = buscarLivroPorId(idLivro);
+    Livro livro = buscarLivroPorId(idLivro);
 
-        if (livro == null) {
-            System.out.println("Livro nao encontrado.");
-            return;
-        }
+    if (livro == null) {
+        System.out.println("Livro nao encontrado.");
+        return;
+    }
 
-        if (livro.isDisponivel()) {
-            System.out.println("Esse livro ja esta disponivel.");
-            return;
-        }
+    if (livro.isDisponivel()) {
+        System.out.println("Esse livro ja esta disponivel.");
+        return;
+    }
 
-        livro.devolver();
-        System.out.println("Livro devolvido com sucesso!");
+    Emprestimo emprestimo = buscarEmprestimoAtivoPorLivro(idLivro);
+
+    if (emprestimo == null) {
+        System.out.println("Emprestimo nao encontrado.");
+        return;
+    }
+
+    livro.devolver();
+    emprestimo.devolver();
+
+    System.out.println("Livro devolvido com sucesso!");
+    System.out.println("Livro: " + livro.getTitulo());
+    System.out.println("Usuario: " + emprestimo.getUsuario().getNome());
+    System.out.println("Data de devolucao: " + emprestimo.getDataDevolucao());
     }
 
     public Livro buscarLivroPorId(int id) {
@@ -129,6 +141,16 @@ public class Biblioteca {
     for (Emprestimo emprestimo : emprestimos) {
         System.out.println(emprestimo);
     }
+    }
+
+    public Emprestimo buscarEmprestimoAtivoPorLivro(int idLivro) {
+    for (Emprestimo emprestimo : emprestimos) {
+        if (emprestimo.getLivro().getId() == idLivro &&
+            emprestimo.estaAtivo()) {
+            return emprestimo;
+        }
+    }
+    return null;
     }
 
 }
