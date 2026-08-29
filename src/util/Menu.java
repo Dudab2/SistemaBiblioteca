@@ -25,6 +25,7 @@ public class Menu {
             System.out.println("4 - Listar usuarios");
             System.out.println("5 - Emprestar livro");
             System.out.println("6 - Devolver livro");
+            System.out.println("7 - Listar emprestimos");
             System.out.println("0 - Sair");
             System.out.print("Escolha uma opcao: ");
 
@@ -49,6 +50,9 @@ public class Menu {
                     break;
                 case 6:
                     devolverLivro();
+                    break;
+                case 7:
+                    biblioteca.listarEmprestimos();
                     break;
                 case 0:
                     System.out.println("Encerrando o sistema...");
@@ -95,11 +99,15 @@ public class Menu {
     }
 
     private void emprestarLivro() {
-        System.out.print("Digite o ID do livro: ");
-        int idLivro = scanner.nextInt();
-        scanner.nextLine();
+    System.out.print("Digite o ID do livro: ");
+    int idLivro = scanner.nextInt();
+    scanner.nextLine();
 
-        biblioteca.emprestarLivro(idLivro);
+    System.out.print("Digite o ID do usuario: ");
+    int idUsuario = scanner.nextInt();
+    scanner.nextLine();
+
+    biblioteca.emprestarLivro(idLivro, idUsuario);
     }
 
     private void devolverLivro() {
