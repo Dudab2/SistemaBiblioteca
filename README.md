@@ -1,100 +1,133 @@
-# Sistema de Biblioteca em Java
+# 📚 Sistema de Biblioteca em Java
 
-Sistema simples de gerenciamento de biblioteca desenvolvido em Java. O projeto funciona pelo terminal e permite cadastrar livros, cadastrar usuarios, listar registros, emprestar livros e devolver livros.
+Sistema de gerenciamento de biblioteca desenvolvido em **Java**, utilizando conceitos de **Programação Orientada a Objetos (POO)** e integração com banco de dados **MariaDB** através de **JDBC**.
 
-## Funcionalidades
+O projeto está sendo desenvolvido com o objetivo de praticar organização de código, orientação a objetos, banco de dados e persistência de dados em uma aplicação Java.
 
-- Cadastrar livros
-- Cadastrar usuarios
-- Listar livros cadastrados
-- Listar usuarios cadastrados
-- Emprestar livros
-- Devolver livros
-- Verificar disponibilidade dos livros
+## 🚀 Funcionalidades
 
-## Tecnologias utilizadas
+Atualmente, o sistema possui:
+
+- Cadastro de livros
+- Cadastro de usuários
+- Listagem de livros
+- Listagem de usuários
+- Empréstimo de livros
+- Devolução de livros
+- Registro e histórico de empréstimos
+- Controle de disponibilidade dos livros
+- Validação de IDs duplicados
+- Persistência do cadastro de livros no MariaDB
+- Geração automática de ID dos livros com `AUTO_INCREMENT`
+
+> Algumas funcionalidades ainda utilizam armazenamento em memória com `ArrayList` e estão sendo gradualmente migradas para o banco de dados.
+
+## 🛠️ Tecnologias utilizadas
 
 - Java
-- Programacao orientada a objetos
-- ArrayList para armazenamento em memoria
-- Scanner para entrada de dados pelo terminal
+- Programação Orientada a Objetos (POO)
+- JDBC
+- MariaDB
+- SQL
+- XAMPP
+- SQLTools
+- Visual Studio Code
+- Git e GitHub
 
-## Estrutura do projeto
-
-```text
-src/
-  Main.java
-  model/
-    Livro.java
-    Usuario.java
-  service/
-    Biblioteca.java
-  util/
-    Menu.java
-```
-
-## Como rodar o projeto
-
-### Pelo VS Code
-
-1. Abra a pasta do projeto no VS Code.
-2. Verifique se a extensao Java esta instalada.
-3. Abra o arquivo `Main.java`.
-4. Clique em `Run` ou `Executar`.
-5. Use o menu no terminal para interagir com o sistema.
-
-### Pelo terminal
-
-Entre na pasta do projeto e compile os arquivos:
-
-```bash
-javac -d bin src/Main.java src/model/*.java src/service/*.java src/util/*.java
-```
-
-Depois execute:
-
-```bash
-java -cp bin Main
-```
-
-## Exemplo de uso
+## 🗂️ Estrutura do projeto
 
 ```text
-===== SISTEMA DE BIBLIOTECA =====
-1 - Cadastrar livro
-2 - Cadastrar usuario
-3 - Listar livros
-4 - Listar usuarios
-5 - Emprestar livro
-6 - Devolver livro
-0 - Sair
-Escolha uma opcao:
+SistemaBiblioteca/
+│
+├── lib/
+│   └── mariadb-java-client-3.5.10.jar
+│
+├── src/
+│   ├── dao/
+│   │   └── LivroDAO.java
+│   │
+│   ├── database/
+│   │   └── Conexao.java
+│   │
+│   ├── model/
+│   │   ├── Livro.java
+│   │   ├── Usuario.java
+│   │   └── Emprestimo.java
+│   │
+│   ├── service/
+│   │   └── Biblioteca.java
+│   │
+│   ├── util/
+│   │   └── Menu.java
+│   │
+│   └── Main.java
+│
+└── README.md
 ```
 
-## Conceitos praticados
+## 🗄️ Banco de dados
 
-Este projeto foi criado para praticar conceitos fundamentais de Java, como:
+O projeto utiliza o banco de dados `biblioteca`, com as seguintes tabelas:
+
+```text
+livros
+usuarios
+emprestimos
+```
+
+A tabela de empréstimos relaciona livros e usuários através de chaves estrangeiras.
+
+Atualmente, o cadastro de livros já é persistido no MariaDB utilizando JDBC e o padrão DAO.
+
+O fluxo do cadastro funciona da seguinte forma:
+
+```text
+Menu
+ ↓
+Biblioteca
+ ↓
+LivroDAO
+ ↓
+Conexao
+ ↓
+MariaDB
+```
+
+## 🧠 Conceitos praticados
+
+Durante o desenvolvimento estão sendo aplicados conceitos como:
 
 - Classes e objetos
 - Encapsulamento
 - Construtores
-- Metodos
-- Pacotes
-- Listas com ArrayList
-- Estrutura de menu com switch
-- Entrada de dados com Scanner
+- Métodos
+- Collections (`ArrayList`)
+- Relacionamento entre objetos
+- DAO (Data Access Object)
+- JDBC
+- `PreparedStatement`
+- Tratamento de exceções
+- SQL
+- Chaves primárias e estrangeiras
+- `AUTO_INCREMENT`
+- Persistência de dados
 
-## Melhorias futuras
+## 📌 Status do projeto
 
-Algumas ideias para evoluir o projeto:
+🚧 **Em desenvolvimento**
 
-- Salvar os dados em arquivos
-- Usar banco de dados MySQL ou SQLite
-- Criar historico de emprestimos
-- Impedir cadastro de livros com ID repetido
-- Criar uma interface grafica
-- Transformar o projeto em uma API com Spring Boot
+A integração com o banco de dados está sendo implementada gradualmente.
 
-## Autor
+### Próximos passos
 
-Desenvolvido como projeto de estudos em Java.
+- Persistir usuários no banco de dados
+- Persistir empréstimos e devoluções
+- Buscar livros diretamente do banco
+- Listar livros e usuários diretamente do banco
+- Melhorar as validações de entrada
+- Remover gradualmente a dependência dos `ArrayList`
+- Melhorar o tratamento de erros
+
+## 🎯 Objetivo
+
+Este projeto faz parte dos meus estudos de **Java, Programação Orientada a Objetos e Banco de Dados**, buscando aplicar os conceitos aprendidos em uma aplicação prática.
